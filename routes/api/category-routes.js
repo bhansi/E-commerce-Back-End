@@ -31,8 +31,35 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  // find one category by its `id` value
-  // be sure to include its associated Products
+  try {
+    const categoryData = await Category.findOne({
+      where: {
+        id: req.params.id
+      },
+      include: [
+        {
+          model: Product,
+          require: false
+        }
+      ]
+    });
+
+    if(!categoryData) {
+      res.status(200).json({
+        message: 'Requested category not found.'
+      });
+      return;
+    }
+
+    const category = categoryData.get({ plain: true });
+
+    res.status(200).json({
+      category
+    });
+  }
+  catch(err) {
+    res.status(400).json(err);
+  }
 });
 
 router.post('/', async (req, res) => {
