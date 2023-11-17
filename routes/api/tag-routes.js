@@ -76,20 +76,14 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const tagData = await Tag.findByPk(req.params.id);
-
-    if(!tagData) {
-      res.status(404).json({
-        message: 'Requested tag not found.'
-      });
-      return;
-    }
-
-    tagData.tag_name = req.body.tag_name;
-    await tagData.save();
+    const updatedTag = await Tag.update(req.body, {
+      where: {
+        id: req.params.id
+      }
+    });
 
     res.status(200).json({
-      message: 'Successfully updated tag name.'
+      updatedTag
     });
   }
   catch(err) {
@@ -105,21 +99,8 @@ router.delete('/:id', async (req, res) => {
       }
     });
 
-    if(!deletedTag) {
-      res.status(404).json({
-        message: 'Requested tag not found.'
-      });
-      return;
-    }
-
-    await ProductTag.destroy({
-      where: {
-        tag_id: req.params.id
-      }
-    });
-
     res.status(200).json({
-      message: 'Successfully deleted tag.'
+      deletedTag
     });
   }
   catch(err) {

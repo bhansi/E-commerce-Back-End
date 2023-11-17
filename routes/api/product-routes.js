@@ -56,7 +56,7 @@ router.get('/:id', async (req, res) => {
 
     if(!productData) {
       res.status(404).json({
-        message: 'No products found.'
+        message: 'Requested product not found.'
       });
       return;
     }
@@ -157,13 +157,6 @@ router.delete('/:id', async (req, res) => {
       }
     });
 
-    if(!deletedProduct) {
-      res.status(404).json({
-        message: 'Requested product not found.'
-      });
-      return;
-    }
-
     await ProductTag.destroy({
       where: {
         product_id: req.params.id
@@ -171,7 +164,7 @@ router.delete('/:id', async (req, res) => {
     });
 
     res.status(200).json({
-      message: 'Successfully deleted product.'
+      deletedProduct
     });
   }
   catch(err) {
