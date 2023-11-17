@@ -89,6 +89,7 @@ router.put('/:id', async (req, res) => {
       res.status(400).json({
         message: 'Category name cannot be blank.'
       });
+      return;
     }
 
     categoryData.category_name = req.body.category_name;
