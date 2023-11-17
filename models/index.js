@@ -9,10 +9,10 @@ Product.belongsTo(Category);
 
 // Product <--M----ProductTag----M--> Tag //
 Product.belongsToMany(Tag, {
-  through: 'ProductTag'
+  through: ProductTag
 });
 Tag.belongsToMany(Product, {
-  through: 'ProductTag'
+  through: ProductTag
 });
 
 module.exports = {
