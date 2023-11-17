@@ -45,7 +45,7 @@ router.get('/:id', async (req, res) => {
     });
 
     if(!categoryData) {
-      res.status(200).json({
+      res.status(404).json({
         message: 'Requested category not found.'
       });
       return;
@@ -75,7 +75,32 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  // update a category by its `id` value
+  try {
+    const categoryData = await Category.findByPk(req.params.id);
+
+    if(!categoryData) {
+      res.status(404).json({
+        message: 'Requested category not found.'
+      });
+      return;
+    }
+
+    if(!req.body.category_name) {
+      res.status(400).json({
+        message: 'Category name cannot be blank.'
+      });
+    }
+
+    categoryData.category_name = req.body.category_name;
+    await categoryData.save();
+
+    res.status(200).json({
+      message: 'Successfully updated category.'
+    });
+  }
+  catch(err) {
+    res.status(400).json(err);
+  }
 });
 
 router.delete('/:id', async (req, res) => {
