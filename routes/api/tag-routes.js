@@ -2,8 +2,6 @@ const router = require('express').Router();
 const { Tag, Product, ProductTag } = require('../../models');
 
 router.get('/', async (req, res) => {
-  // find all tags
-  // be sure to include its associated Product data
   try {
     const tagData = await Tag.findAll({
       include: [
@@ -33,8 +31,35 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  // find a single tag by its `id`
-  // be sure to include its associated Product data
+  try {
+    const tagData = await Tag.findOne({
+      where: {
+        id: req.params.id
+      },
+      include: [
+        {
+          model: Product,
+          through: ProductTag
+        }
+      ]
+    });
+
+    if(!tagData) {
+      res.status(404).json({
+        message: 'Requested tag not found.'
+      });
+      return;
+    }
+
+    const tag = tagData.get({ plain: true });
+
+    res.status(200).json({
+      tag
+    });
+  }
+  catch(err) {
+    res.status(400).json(err);
+  }
 });
 
 router.post('/', async (req, res) => {
