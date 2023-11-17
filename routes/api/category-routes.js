@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     });
 
     if(!categoryData.length) {
-      res.status(200).json({
+      res.status(404).json({
         message: 'No categories found.'
       });
       return;
