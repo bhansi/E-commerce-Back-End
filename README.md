@@ -29,7 +29,7 @@ Additionally, this application has no front end. In order to interact with the d
 1. Run 'npm start' in the command line.<br>
 2. Open Insomnia and execute GET, POST, PUT, or DELETE requests to http://localhost:3001.<br><br>
 
-The following [video]() demonstrates the setup and use of the application. Additionally, the available HTTP requests are outlined below.<br><br>
+The following [video](https://drive.google.com/file/d/1o8ca61f51rKt35cjiynIJNffIpqo2Xkt/view?usp=sharing) demonstrates the setup and use of the application. Additionally, the available HTTP requests are outlined below.<br><br>
 
 Available GET requests:<br>
 1. All categories (/api/categories)<br>
